@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW27.Chat", "HW27.Chat\HW27.Chat.csproj", "{5BBA0407-0E3C-44D0-B619-88F6490561ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW27.Receiver", "HW27.Receiver\HW27.Receiver.csproj", "{F8086133-2AA2-468D-8C34-226FCD3E6672}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5BBA0407-0E3C-44D0-B619-88F6490561ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BBA0407-0E3C-44D0-B619-88F6490561ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BBA0407-0E3C-44D0-B619-88F6490561ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8086133-2AA2-468D-8C34-226FCD3E6672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8086133-2AA2-468D-8C34-226FCD3E6672}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8086133-2AA2-468D-8C34-226FCD3E6672}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8086133-2AA2-468D-8C34-226FCD3E6672}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
