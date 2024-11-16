@@ -11,33 +11,53 @@ class Program
 		using (var connection = factory.CreateConnectionAsync())
 		using (var channel = connection.Result.CreateChannelAsync())
 		{
-			var queueName = "userQueue";
+			string exchangeName = "chat_exchange";
+			channel.Result.ExchangeDeclareAsync(exchange: exchangeName, type: "direct");
+
+			Console.WriteLine("Enter your username:");
+			string username = Console.ReadLine();
+
+
 			channel.Result.QueueDeclareAsync(
-				queue: queueName,
+				queue: "userQueue",
 				durable: false,
 				exclusive: false,
 				autoDelete: false,
 				arguments: null);
 
-            Console.WriteLine("Waiting for messages...");
+
+			channel.Result.QueueBindAsync(
+				queue: "userQueue",
+				exchange: exchangeName,
+				routingKey: username);
+
 
 			var consumer = new AsyncEventingBasicConsumer(channel.Result);
-
 			consumer.ReceivedAsync += async (model, ea) =>
 			{
 				var body = ea.Body.ToArray();
 				var message = Encoding.UTF8.GetString(body);
-				Console.WriteLine($"Received: {message}");
+				Console.WriteLine($"[Received] {message}");
 
 				await Task.CompletedTask;
 			};
 
 			channel.Result.BasicConsumeAsync(
-				queue: queueName,
+				queue: "userQueue",
 				autoAck: true,
 				consumer: consumer);
 
-			Console.ReadLine();
-        }
+			string message = "Hello RabbitMQ";
+			var body = Encoding.UTF8.GetBytes(message);
+
+			channel.Result.BasicPublishAsync(
+				exchange: "",
+				routingKey: "userQueue",
+				body: body);
+
+			Console.WriteLine($" [x] Sent {message}");
+		}
+
+		Console.ReadLine();
 	}
 }

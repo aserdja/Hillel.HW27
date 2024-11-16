@@ -10,24 +10,29 @@ class Program
 		using (var connection = factory.CreateConnectionAsync())
 		using (var channel = connection.Result.CreateChannelAsync())
 		{
-			channel.Result.QueueDeclareAsync(
-				queue: "userQueue",
-				durable: false,
-				exclusive: false,
-				autoDelete: false,
-				arguments: null);
+			string exchangeName = "chat_exchange";
+			channel.Result.ExchangeDeclareAsync(
+				exchange: exchangeName,
+				type: "direct");
 
-			string message = "Hello RabbitMQ";
-			var body = Encoding.UTF8.GetBytes(message);
+			Console.WriteLine("Enter your username:");
+			string username = Console.ReadLine();
 
-			channel.Result.BasicPublishAsync(
-				exchange: "",
-				routingKey: "userQueue",
-				body: body);
+			Console.WriteLine("Enter recipient's username:");
+			string recipient = Console.ReadLine();
 
-			Console.WriteLine($" [x] Sent {message}");
+			while (true)
+			{
+				Console.Write("Message: ");
+				string message = Console.ReadLine();
+
+				var body = Encoding.UTF8.GetBytes($"{username}: {message}");
+				channel.Result.BasicPublishAsync(
+					exchange: exchangeName,
+					routingKey: recipient,
+					body: body);
+				Console.WriteLine($"[Sent] {message}");
+			}
 		}
-
-		Console.ReadLine();
 	}
 }
